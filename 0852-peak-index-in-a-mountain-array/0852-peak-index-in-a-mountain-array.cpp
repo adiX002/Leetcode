@@ -1,22 +1,19 @@
 class Solution {
 public:
-    int peakIndexInMountainArray(vector<int>& A) {
-        //binary search
-        int low = 0;
-        int up = A.size()-1;
-        int cur = A.size()/2;
-        // cout << low << " " << up << " " << cur << endl;
-        while(true){
-        // cout << low << " " << up << " " << cur << endl;
-            if(A[cur-1] < A[cur] && A[cur] < A[cur+1]){ //left side of mountain
-                low = cur;
-                cur = (cur+up)/2;
-            }else if(A[cur-1] > A[cur] && A[cur] > A[cur+1]){ //right side
-                up = cur;
-                cur = (cur+low)/2;
-            }else{
-                return cur;
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int s = 0;
+        int e = arr.size();
+        int mid = s + (e-s)/2;
+        
+        while(s<e){
+            if(arr[mid]<arr[mid+1]){
+                s = mid + 1;
             }
+            else{
+                e = mid;
+            }
+            mid = s + (e-s)/2;
         }
+        return s;
     }
 };
