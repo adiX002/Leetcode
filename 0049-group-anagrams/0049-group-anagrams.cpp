@@ -1,18 +1,23 @@
 class Solution {
- public:
-  vector<vector<string>> groupAnagrams(vector<string>& strs) {
-    vector<vector<string>> ans;
-    unordered_map<string, vector<string>> keyToAnagrams;
+public:
+    array<int, 256> generateHash(string s) {
+        array<int, 256> hash = {0};
 
-    for (const string& str : strs) {
-      string key = str;
-      sort(key.begin(), key.end());
-      keyToAnagrams[key].push_back(str);
+        for (int i = 0; i < s.length(); i++) {
+            hash[s[i]]++;
+        }
+
+        return hash;
     }
 
-    for (const auto& [_, anagrams] : keyToAnagrams)
-      ans.push_back(anagrams);
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> ans;
+        map<std::array<int, 256>, vector<string>> mp;
 
-    return ans;
-  }
+        for (auto str : strs)   mp[generateHash(str)].push_back(str);
+
+        for (auto str : mp) ans.push_back(str.second);
+
+        return ans;
+    }
 };
